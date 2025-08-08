@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego del Número Secreto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e1b28;
+      color: white;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+      background-color: #1f2f46;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+    }
+
+    nav ul li {
+      position: relative;
+      margin: 0 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+    }
+
+    nav ul li:hover .submenu {
+      display: block;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 30px;
+      left: 0;
+      background: #32425c;
+      padding: 10px;
+    }
+
+    .submenu li {
+      margin: 5px 0;
+    }
+
+    .juego {
+      margin-top: 50px;
+      background: #1b2b44;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input[type="number"] {
+      padding: 8px;
+      font-size: 16px;
+      width: 60%;
+    }
+
+    button {
+      margin: 10px 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #mensaje {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    #intentos {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Mis Proyectos</a>
+          <ul class="submenu">
+            <li><a href="index.html">Número Secreto</a></li>
+            <li><a href="#">Proyecto Final</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="juego">
+      <h1>Juego del número secreto!</h1>
+      <p>Indica un número del 1 al 10</p>
+      <input type="number" id="inputNumero" min="1" max="10" />
+      <br>
+      <button onclick="intentar()">Intentar</button>
+      <button onclick="nuevoJuego()">Nuevo juego</button>
+      <p id="mensaje"></p>
+      <p id="intentos"></p>
+    </section>
+  </main>
+
+  <script>
+    let numeroSecreto = Math.floor(Math.random() * 10) + 1;
+    let contadorIntentos = 0;
+
+    function intentar() {
+      const input = document.getElementById("inputNumero");
+      const mensaje = document.getElementById("mensaje");
+      const intentos = document.getElementById("intentos");
+
+      const numeroIngresado = Number(input.value);
+
+      // Validación de campo vacío
+      if (!numeroIngresado) {
+        alert("Por favor, ingresa un número del 1 al 10.");
+        return;
+      }
+
+      contadorIntentos++;
+
+      if (numeroIngresado === numeroSecreto) {
+        mensaje.innerText = `🎉 ¡Felicidades! Adivinaste el número secreto ${numeroSecreto}.`;
+        intentos.innerText = `Lo lograste en ${contadorIntentos} ${contadorIntentos === 1 ? "intento" : "intentos"}.`;
+      } else if (numeroIngresado < numeroSecreto) {
+        mensaje.innerText = "🔼 El número secreto es mayor.";
+      } else {
+        mensaje.innerText = "🔽 El número secreto es menor.";
+      }
+
+      // Limpiar campo
+      input.value = "";
+    }
+
+    function nuevoJuego() {
+      numeroSecreto = Math.floor(Math.random() * 10) + 1;
+      contadorIntentos = 0;
+      document.getElementById("mensaje").innerText = "";
+      document.getElementById("intentos").innerText = "";
+      document.getElementById("inputNumero").value = "";
+    }
+  </script>
+
+</body>
+</html>
